@@ -1,16 +1,12 @@
 import { DataSource } from 'typeorm';
-import { Item } from '@entities/items.entity';
-
-const CLEAR_TABLE_BEFORE_SEED = true;
+import { Item } from '@database/entities/item.entity';
 
 export async function seedItems(dataSource: DataSource) {
   const repo = dataSource.getRepository(Item);
 
-  if (CLEAR_TABLE_BEFORE_SEED) {
-    console.log('Clearing items table...');
-    await dataSource.query('TRUNCATE TABLE Item RESTART IDENTITY CASCADE');
+  if (process.env.CLEAR_TABLE_BEFORE_SEED === 'true') {
+    await repo.clear();
   }
-  Item;
 
   const batchSize = 1000;
   const total = 50000;

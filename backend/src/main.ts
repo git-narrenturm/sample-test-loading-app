@@ -13,7 +13,8 @@ async function bootstrap() {
 
   setupSwagger(app);
 
-  const port = configService.get('PORT') ?? 3001;
+  const port = configService.get('PORT') ?? 3000;
+  console.log(`The app is running on port: ${port}`);
   await app.listen(port);
 }
 bootstrap();

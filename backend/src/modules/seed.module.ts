@@ -8,8 +8,12 @@ export class SeedModule implements OnModuleInit {
 
   async onModuleInit() {
     if (process.env.NODE_ENV === 'development') {
+      console.log('Running migrations...');
+      await this.dataSource.runMigrations();
+
       console.log('Running seeder...');
       await seedItems(this.dataSource);
+
       console.log('Seeder completed.');
     }
   }

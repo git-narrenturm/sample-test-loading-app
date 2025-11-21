@@ -8,7 +8,6 @@ export default {
     '^@services/(.*)$': '<rootDir>/src/services/$1',
     '^@database/(.*)$': '<rootDir>/src/database/$1',
     '^@entities/(.*)$': '<rootDir>/src/database/entities/$1',
-    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
   },
   transform: {
     '^.+\\.ts$': 'ts-jest',

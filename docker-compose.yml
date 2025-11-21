@@ -7,6 +7,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - redis
     env_file:
       - ./backend/.env
     networks:
@@ -20,12 +21,35 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - ./db/.env
+      - ./backend/.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - sample-test-loading-app-network
+
+  redis:
+    image: redis:7.2
+    container_name: sample-test-loading-app-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - sample-test-loading-app-network
+
+  frontend:
+    build: ./frontend
+    image: sample-test-loading-app-frontend:latest
+    container_name: sample-test-loading-app-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    networks:
+      - sample-test-loading-app-network
+    command: npm run dev -- --host
 
 networks:
   sample-test-loading-app-network:

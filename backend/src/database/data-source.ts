@@ -1,9 +1,9 @@
-import dotenv from 'dotenv'
+import * as path from 'path';
+import dotenv from 'dotenv';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Item } from '@entities/items.entity';
-import { SeedItems } from './migrations/items.migration';
+import { Item } from '@entities/item.entity';
 
-dotenv.config()
+dotenv.config();
 
 export const typeormConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -15,5 +15,10 @@ export const typeormConfig: TypeOrmModuleOptions = {
   entities: [Item],
   synchronize: false,
   logging: false,
-  migrations: [SeedItems]
+  migrations: [path.join(__dirname, 'migrations', '*.{ts,js}')],
+  extra: {
+    max: 20,
+  },
+  retryAttempts: 10,
+  retryDelay: 3000,
 };

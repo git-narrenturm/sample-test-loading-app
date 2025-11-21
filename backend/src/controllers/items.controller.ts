@@ -3,8 +3,8 @@ import { ApiTags, ApiQuery, ApiOkResponse } from '@nestjs/swagger';
 import { ItemsService } from '@services/items.service';
 import { GetItemsDto } from '@services/dto/items.dto';
 
-@ApiTags('Items')
-@Controller('items')
+@ApiTags('Item')
+@Controller('item')
 export class ItemsController {
   constructor(private readonly service: ItemsService) {}
 
